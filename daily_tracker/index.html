@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPulse — Daily Productivity Tracker</title>
+    <meta name="description" content="Track your LeetCode problems, GitHub pushes, and projects with beautiful visual dashboards.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <h1>DevPulse</h1>
+            </div>
+            <p class="tagline">Your daily coding heartbeat</p>
+        </div>
+        <div class="header-right">
+            <div class="streak-badge" id="streak-badge">
+                <span class="streak-fire">🔥</span>
+                <span class="streak-count" id="current-streak">0</span>
+                <span class="streak-label">day streak</span>
+            </div>
+            <button class="btn-add" id="btn-open-modal" aria-label="Add new entry">
+                <span>+</span> Log Activity
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="app-main">
+
+        <!-- Stats Overview Cards -->
+        <section class="stats-grid" id="stats-section" aria-label="Today's statistics">
+            <div class="stat-card stat-leetcode">
+                <div class="stat-icon">🧩</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="stat-leetcode-today">0</span>
+                    <span class="stat-label">LeetCode Today</span>
+                </div>
+                <div class="stat-total">Total: <strong id="stat-leetcode-total">0</strong></div>
+            </div>
+            <div class="stat-card stat-github">
+                <div class="stat-icon">🐙</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="stat-github-today">0</span>
+                    <span class="stat-label">GitHub Pushes Today</span>
+                </div>
+                <div class="stat-total">Total: <strong id="stat-github-total">0</strong></div>
+            </div>
+            <div class="stat-card stat-project">
+                <div class="stat-icon">🚀</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="stat-projects-today">0</span>
+                    <span class="stat-label">Project Milestones Today</span>
+                </div>
+                <div class="stat-total">Total: <strong id="stat-projects-total">0</strong></div>
+            </div>
+            <div class="stat-card stat-streak">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="stat-longest-streak">0</span>
+                    <span class="stat-label">Longest Streak</span>
+                </div>
+                <div class="stat-total">Current: <strong id="stat-current-streak">0</strong> days</div>
+            </div>
+        </section>
+
+        <!-- Calendar Heatmap -->
+        <section class="card heatmap-section" id="heatmap-section" aria-label="Activity heatmap">
+            <div class="card-header">
+                <h2>📅 Activity Heatmap</h2>
+                <div class="heatmap-legend">
+                    <span class="legend-label">Less</span>
+                    <span class="legend-box level-0"></span>
+                    <span class="legend-box level-1"></span>
+                    <span class="legend-box level-2"></span>
+                    <span class="legend-box level-3"></span>
+                    <span class="legend-box level-4"></span>
+                    <span class="legend-label">More</span>
+                </div>
+            </div>
+            <div class="heatmap-wrapper" id="heatmap-container"></div>
+        </section>
+
+        <!-- Charts Row -->
+        <section class="charts-row" aria-label="Trend charts">
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h2>📈 LeetCode Trend</h2>
+                    <select id="lc-range" class="range-select">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="leetcode-chart"></canvas>
+                </div>
+            </div>
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h2>📊 GitHub Pushes</h2>
+                    <select id="gh-range" class="range-select">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="github-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Breakdown -->
+        <section class="card chart-card breakdown-section" aria-label="Category breakdown">
+            <div class="card-header">
+                <h2>🍩 Category Breakdown</h2>
+            </div>
+            <div class="chart-container chart-container-donut">
+                <canvas id="category-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Activity Log -->
+        <section class="card activity-section" id="activity-section" aria-label="Activity log">
+            <div class="card-header">
+                <h2>📋 Activity Log</h2>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="leetcode">LeetCode</button>
+                    <button class="filter-btn" data-filter="github">GitHub</button>
+                    <button class="filter-btn" data-filter="project">Projects</button>
+                </div>
+            </div>
+            <div class="activity-list" id="activity-list">
+                <!-- Entries rendered by JS -->
+                <div class="empty-state" id="empty-state">
+                    <span class="empty-icon">📭</span>
+                    <p>No activities logged yet. Click <strong>"Log Activity"</strong> to get started!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== ADD ENTRY MODAL ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="modal-close" id="btn-close-modal" aria-label="Close modal">&times;</button>
+            <h2 id="modal-title">Log New Activity</h2>
+            <form id="entry-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="entry-type">Category</label>
+                    <div class="type-selector">
+                        <label class="type-option">
+                            <input type="radio" name="entry-type" value="leetcode" checked>
+                            <span class="type-chip lc-chip">🧩 LeetCode</span>
+                        </label>
+                        <label class="type-option">
+                            <input type="radio" name="entry-type" value="github">
+                            <span class="type-chip gh-chip">🐙 GitHub</span>
+                        </label>
+                        <label class="type-option">
+                            <input type="radio" name="entry-type" value="project">
+                            <span class="type-chip pj-chip">🚀 Project</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="entry-title">Title</label>
+                    <input type="text" id="entry-title" placeholder="e.g. Two Sum, Pushed auth-service, Built landing page" required>
+                </div>
+                <div class="form-group" id="difficulty-group">
+                    <label for="entry-difficulty">Difficulty</label>
+                    <select id="entry-difficulty">
+                        <option value="easy">🟢 Easy</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="hard">🔴 Hard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="entry-date">Date</label>
+                    <input type="date" id="entry-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="entry-notes">Notes <span class="optional">(optional)</span></label>
+                    <textarea id="entry-notes" rows="3" placeholder="Any extra details..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit" id="btn-submit">Save Activity</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
