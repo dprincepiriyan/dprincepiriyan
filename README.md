@@ -34,3 +34,13 @@ Hello! 👋 I’m **Prince Piriyan**, a passionate Computer Science student dedi
 ---
 
 _"Striving for progress, not perfection."_
+
+---
+
+## Coding Profile Auto-Update
+- A scheduled GitHub Action can auto-refresh coding profile stats from Codeforces, LeetCode, and CodeChef.
+- Sync files are located in `coding_profiles_sync/`.
+- Configure these GitHub Action Variables in the repository:
+	- `CODEFORCES_HANDLE`
+	- `LEETCODE_USERNAME`
+	- `CODECHEF_USERNAME`

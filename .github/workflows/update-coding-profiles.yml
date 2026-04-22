@@ -1,0 +1,44 @@
+name: Update Coding Profiles
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r coding_profiles_sync/requirements.txt
+
+      - name: Fetch latest stats
+        env:
+          CODEFORCES_HANDLE: ${{ vars.CODEFORCES_HANDLE }}
+          LEETCODE_USERNAME: ${{ vars.LEETCODE_USERNAME }}
+          CODECHEF_USERNAME: ${{ vars.CODECHEF_USERNAME }}
+        run: python coding_profiles_sync/update_stats.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add coding_profiles_sync/latest_stats.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: update coding profile stats"
+          git push
