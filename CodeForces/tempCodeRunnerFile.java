@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class nextRound {
+public class tempCodeRunnerFile {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
         int n=sc.nextInt();
@@ -20,5 +20,6 @@ public class nextRound {
 
         }
         System.out.println(final_count);
+        sc.close();
     }
 }
