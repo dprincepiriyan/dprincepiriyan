@@ -75,7 +75,7 @@
 🥇  Hack-A-League Bangalore  —  Multi-agent autonomous business ops system
 💼  Cognifyz Internship       —  Built TaskFlow (Node, MongoDB, Redis, Bull, JWT, OAuth)
 ☁️  AWS Cloud Practitioner   —  Certified
-🎯  475+ LeetCode             —  Sliding Window · Two Pointers · Backtracking · DP
+🎯  500+ LeetCode             —  Sliding Window · Two Pointers · Backtracking · DP
 🔐  Cybersecurity Hackathon   —  UI/UX Lead on Awareness Platform (Figma)
 ```
 
@@ -114,7 +114,7 @@
 2024  ──▶  AWS Cloud Practitioner Certified
 2025  ──▶  Cognifyz Internship — TaskFlow (full-stack, 8 tasks)
 2025  ──▶  Hack-A-League Bangalore — Multi-agent AI system
-2025  ──▶  475+ LeetCode problems solved
+2025  ──▶  500+ LeetCode problems solved
 2026+ ──▶  Targeting EU (Netherlands / Finland) — Fintech & Systems Engineering
 ```
 
