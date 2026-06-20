@@ -21,7 +21,7 @@
 - 🎓 Pre-final year **CSE student** @ Chennai Institute of Technology (2024–2028)
 - 🌍 Long-term goal: Software Engineer in **Netherlands / Finland** (Fintech + Low-latency)
 - ☁️ **AWS Cloud Practitioner** certified
-- 💻 **475+ LeetCode** problems solved — Java is my weapon of choice
+- 💻 **500+ LeetCode** problems solved — Java is my weapon of choice
 - 🌐 Multilingual: Tamil · Telugu · Hindi · English
 
 ---
