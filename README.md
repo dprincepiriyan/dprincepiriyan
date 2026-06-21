@@ -10,7 +10,7 @@
 ![Profile Views](https://komarev.com/ghpvc/?username=dprincepiriyan&color=58a6ff&style=flat&label=Profile+Views)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/d-prince-piriyan-b215ba32a)
 [![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=flat&logo=leetcode&logoColor=black)](https://leetcode.com/u/NLYhJOAhBq/)
-![LeetCode](https://img.shields.io/badge/475%2B_Problems-FFA116?style=flat&logo=leetcode&logoColor=black)
+![LeetCode](https://img.shields.io/badge/500%2B_Problems-FFA116?style=flat&logo=leetcode&logoColor=black)
 
 </div>
 
